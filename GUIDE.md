@@ -72,7 +72,17 @@ To recreate the premium look used in this project:
 - **Glassmorphism**: Use `bg-black/60` combined with `backdrop-blur-2xl` and `border-white/10` for overlays.
 - **Responsive Layout**: Adjust the PiP size based on screen width using Tailwind's `sm:` prefix.
 
-## 5. Running the App
+## 5. Synced Whiteboard (Advanced)
+
+To ensure the whiteboard is synced between users:
+- **Persistent DataConnection**: We open a connection once and reuse it (`dataConnRef`).
+- **Coordinate Mapping**: Since CSS might scale the canvas, we map mouse clicks to the internal resolution:
+  ```ts
+  const x = (e.clientX - rect.left) * (canvas.width / rect.width);
+  ```
+- **Real-time Broadcast**: Every line segment drawn locally is sent as a `{ type: 'draw', x, y, prevX, prevY }` message.
+
+## 6. Running the App
 
 1. Start your dev server: `npm run dev`
 2. Open `http://localhost:3000` in **two different browser tabs**.
